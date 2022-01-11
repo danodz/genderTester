@@ -1,0 +1,107 @@
+<!--
+TODO
+Set value for option none    
+Do we keep the word custom
+Make it not ugly
+Fix is/are
+-->
+<html>
+    <body>
+        <div class="radioGroup">
+            <label><input name="subject" type="radio" value="he" checked>he</label>
+            <label><input name="subject" type="radio" value="she">she</label>
+            <label><input name="subject" type="radio" value="they">they</label>
+            <label><input name="subject" type="radio" value="">none</label>
+            <span class="custom">
+                <label><input name="subject" type="radio" value="" class="radio"></label>custom <input class="text">
+            </span>
+        </div>
+
+        <div class="radioGroup">
+            <label><input name="object" type="radio" value="him" checked>him</label>
+            <label><input name="object" type="radio" value="her">her</label>
+            <label><input name="object" type="radio" value="them">them</label>
+            <label><input name="object" type="radio" value="">none</label>
+            <span class="custom">
+                <label><input name="object" type="radio" value="" class="radio"></label>custom <input class="text">
+            </span>
+        </div>
+
+        <div class="radioGroup">
+            <label><input name="possessive" type="radio" value="his" checked>his</label>
+            <label><input name="possessive" type="radio" value="her">her</label>
+            <label><input name="possessive" type="radio" value="their">their</label>
+            <label><input name="possessive" type="radio" value="">none</label>
+            <span class="custom">
+                <label><input name="possessive" type="radio" value="" class="radio"></label>custom <input class="text">
+            </span>
+        </div>
+
+        <div class="radioGroup">
+            <label><input name="reflexive" type="radio" value="himself" checked>himself</label>
+            <label><input name="reflexive" type="radio" value="herself">herself</label>
+            <label><input name="reflexive" type="radio" value="themself">themself</label>
+            <label><input name="reflexive" type="radio" value="">none</label>
+            <span class="custom">
+                <label><input name="reflexive" type="radio" value="" class="radio"></label>custom <input class="text">
+            </span>
+        </div>
+
+        <div class="radioGroup">
+            <label><input name="word" type="radio" value="girl" checked>girl</label>
+            <label><input name="word" type="radio" value="woman">woman</label>
+            <label><input name="word" type="radio" value="boy">boy</label>
+            <label><input name="word" type="radio" value="man">man</label>
+            <span class="custom">
+                <label><input name="word" type="radio" value="" class="radio"></label>custom <input class="text">
+            </span>
+        </div>
+        <div class="radioGroup">
+            You can enter your legal name, or any name you use or want to experiment with!
+            <input name="name">
+        </div>
+        
+        <button onclick="generateText();">Try it</button>
+
+        <pre class="textDisplay"></pre>
+    </body>
+
+    <script src="mustache.js"></script>
+    <script>
+        var text = `
+{{name}} is so funny. // I love to hangout with {{object}}
+{{name}} is a strong {{word}}. // {{subject}} can achieve anything!
+You should meet my friend {{name}}. // {{subject}} is/are delightful!
+I appreciate {{possessive}} company.
+
+I hope you have a good day {{name}}
+        `
+
+        function generateText() {
+
+            document.querySelectorAll(".custom").forEach( function(parentNode) {
+                    parentNode.querySelector("input.radio").value = parentNode.querySelector("input.text").value;
+            });
+
+            var data = {
+                subject : document.querySelector('input[name="subject"]:checked').value,
+                object : document.querySelector('input[name="object"]:checked').value,
+                possessive : document.querySelector('input[name="possessive"]:checked').value,
+                reflexive : document.querySelector('input[name="reflexive"]:checked').value,
+                word : document.querySelector('input[name="word"]:checked').value,
+                name : document.querySelector('input[name="name"]').value
+            };
+            document.querySelector(".textDisplay").innerHTML= Mustache.render(text, data);
+        }
+
+    </script>
+    
+    <style>
+        
+    .radioGroup > label {
+        min-width: 100px;
+        display: inline-block;
+    }
+
+    </style>
+</html>
